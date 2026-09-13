@@ -27,5 +27,12 @@ This is a documented limitation of the underlaying 'pypdf' library.
 - Source citations now include page numbers
 - Added a warning for documents that produce little/ no extractable text 
 
+### Retrieval is sensitive to spelling/typos
+**Observation:** Questions with typos sometimes fail to retrieve relevant chunks, even when a correctly spelled version works.
+
+**Root Cause:** Embedding models tokenize text into sub-word units before vectorizing. Misspelled words often tokenize very differently from their correct form, shifting the result vector away from the semantically correct region of embedding space.
+
+**Planned improvement:** Add hybrid search (dense embeddings + BM25 keyword matching) so exact/near-exact term matches are not lost when semantic similarity drifts. 
+
 ## Stack 
 Python, LangChain, Ollama, ChromaDB
