@@ -6,7 +6,7 @@ from src.config import DOCS_PATH, CHUNK_SIZE, CHUNK_OVERLAP
 def load_documents(): 
     "Load every supported file from the docs folder into LangChain Document objects."
     documents = []
-    for filename in os.listdir(DOCS_PATH):
+    for filename in os.listdir(DOCS_PATH): 
         file_path = os.path.join(DOCS_PATH, filename)
 
         if filename.endswith(".pdf"):
@@ -16,7 +16,13 @@ def load_documents():
         else:
             continue  # skip unsupported file types for now
 
-        documents.extend(loader.load())
+        loaded = loader.load()
+        # warn if a file produced (almost) no detectable text -> strong signal if the file is not actually text-based (e.g., scanned images)
+        total_chars = sum(len(doc.page_content) for doc in loaded)
+        if total_chars < 20: 
+            print(f"Warning: {filename} contains very little detectable text - it may be a scanned or image-based pdf.")
+
+        documents.extend(loaded)
 
     return documents
 

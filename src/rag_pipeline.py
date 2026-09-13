@@ -20,5 +20,14 @@ def generate_answer(chunks, question):
     prompt = build_prompt(chunks, question)
     llm = OllamaLLM(model=LLM_MODEL)
     answer = llm.invoke(prompt)
-    sources = [chunk.metadata.get("source", "unknown") for chunk in chunks]
+
+    sources = []
+    for chunk in chunks:
+        filename = chunk.metadata.get("source", "unknown")
+        page = chunk.metadata.get("page")
+        if page is not None: 
+            sources.append(f"{filename} (page {page + 1})")
+        else: 
+            sources.append(filename)
+        
     return answer, sources

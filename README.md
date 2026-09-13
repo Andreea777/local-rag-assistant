@@ -20,5 +20,12 @@ This is a documented limitation of the underlaying 'pypdf' library.
 
 **Planned improvement:** Add an OCR fallback so scanned documents can be indexed too. 
 
+## Phase 2 - Status: Multi-document indexing + interactive terminal chat
+- Indexing and querying are now separate steps 
+- Supports multiple documents in 'data/docs/' simultaneously 
+- Interactive chat loop - ask multiple questions per session 
+- Source citations now include page numbers
+- Added a warning for documents that produce little/ no extractable text 
+
 ## Stack 
 Python, LangChain, Ollama, ChromaDB
